@@ -13,9 +13,12 @@ app = FastAPI()
 
 # Define input schema
 class ModelInput(BaseModel):
-    feature1: float  # First biometric/physiological measurement
-    feature2: float  # Second measurement (e.g., heart rate, temp)
-    feature3: float  # Third measurement
+    weight: float  # Weight in kg
+    impedance: float  # Impedance in Ohm
+    temperature: float  # Temperature in Celsius
+    weight_change: float  # Weight change in %
+    extra_feature: float  # Placeholder for missing feature
+
 
 
 @app.get("/")
@@ -26,7 +29,7 @@ def home():
 def predict(data: ModelInput):
     # Convert input data to a numpy array
     input_data = np.array([
-        data.feature1, data.feature2, data.feature3
+        data.weight, data.impedance, data.temperature, data.weight_change, data.extra_feature
     ]).reshape(1, -1)
 
     # Make prediction
